@@ -6,7 +6,7 @@
         private $db_name = "micro-system";
         private $db_user = "root";
         private $db_pass = null;
-
+        
         use Product;
         use Payment;
 
