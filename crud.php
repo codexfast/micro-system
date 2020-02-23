@@ -1,14 +1,13 @@
 <?php
 
-    class Crud {
+    require_once 'config.php';
+    require_once 'tools.php';
 
-        private $db_host = "localhost";
-        private $db_name = "micro-system";
-        private $db_user = "root";
-        private $db_pass = null;
+    class Crud {
         
         use Product;
         use Payment;
+        use DataBase;
 
         function __construct() {
             $this->conn = new PDO("mysql:host={$this->db_host};dbname={$this->db_name}", $this->db_user, $this->db_pass);
