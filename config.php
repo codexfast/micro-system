@@ -2,8 +2,10 @@
 
     include_once 'tools.php';
 
-    define('BASE_URL', 'http://localhost:8090');
-
+    // From Heroku
+    define('BASE_URL', 'https://micro-system.herokuapp.com');
+    
+    // From localhost database
     // define('db_host', "localhost");
     // define('db_name', "micro-system");
     // define('db_username', "root");
