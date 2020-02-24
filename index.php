@@ -115,7 +115,9 @@
   <hr>
   <p class="mb-0">Talvez na proxima atualização irei implementar o modo sandbox do mercado pago</p>
 </div>
-<?php } ?>
+<?php 
+  } 
+?>
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Micro loja</h1>
