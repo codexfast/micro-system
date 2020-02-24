@@ -42,11 +42,16 @@
 
     if (!isset($_SESSION['client_on'])) {
 
-        require __DIR__ . '/layout/bootstrap.login.php';
-        exit;
+        redirect(BASE_URL + 'login.php');
     }
 
-    $user = $crud->get_client_by_token($_SESSION['client_token']);
+    $logged = isset($_SESSION['client_on']);
+    
+    if ($logged)
+    {
+      $user = $crud->get_client_by_token($_SESSION['client_token']);
+    }
+
     $products = $crud->all_product();
     
     ?>
@@ -59,18 +64,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.6">
     <title>Micro Loja</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/pricing/">
 
     <!-- Bootstrap core CSS -->
-<link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="<?=BASE_URL?>/vendor/needim/noty/lib/noty.css" rel="stylesheet">
+    
+    <script src="<?=BASE_URL?>/vendor/needim/noty/lib/noty.js" type="text/javascript"></script>
 
-
-<meta name="theme-color" content="#563d7c">
-
+    <meta name="theme-color" content="#563d7c">
 
     <style>
       .bd-placeholder-img {
@@ -89,19 +93,53 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="pricing.css" rel="stylesheet">
+
   </head>
   <body>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal"><?= $user->name?></h5>
-  <nav class="my-2 my-md-0 mr-md-3">
 
-  </nav>
-  <a class="btn btn-link text-muted" href="<?=BASE_URL?>/settings.php">settings</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light bg-white border-bottom shadow-sm fixed-top">
+  <div class="container">
+  <a class="navbar-brand" href="#">SMARTS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
 
-  <a class="btn btn-outline-primary" href="<?=BASE_URL?>/logout.php">Logout</a>
-</div>
+    <?php 
+    if ($logged):
+    ?>
 
+    <li class="nav-item">
+      <a class="nav-link text-muted mr-1" href="<?=BASE_URL?>/cart.php" id="go_cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-dark" id="badge-cart">0</span></a>
+    </li>
+    <li class="nav-item mr-2">
+        <a class="nav-link text-muted" href="<?=BASE_URL?>/settings.php"> <i class="fa fa-cog mr-1"></i>Settings </a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-outline-primary" href="<?=BASE_URL?>/logout.php"></i>Log Out</a>
+    </li>
+
+    <?php 
+      else:
+    ?>
+
+    <li class="nav-item mr-2">
+      <a class="nav-link text-muted mr-1" href="<?=BASE_URL?>/cart.php" id="go_cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-dark" id="badge-cart">0</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-outline-primary" href="<?=BASE_URL?>/login.php"></i>Log In</a>
+    </li>
+    <?php 
+      endif;
+    ?>
+
+    </ul>
+  </div>
+  </div>
+</nav>
+
+<div class="p-4"></div>
 <?php
 
   if (isset($_GET['buy']))
@@ -136,9 +174,9 @@
           <h4 class="my-0 font-weight-normal text-center"><?=$product->name?></h4>
         </div>
         <div class="card-body">
-          <h1 class="card-title pricing-card-title text-center"> <small class="text-muted">R$</small> <?=str_replace('.', ',', $product->price)?></h1>
-          <p class="container" style="min-height: 100px;"><?=$product->description?></p>
-          <a class="btn btn-lg btn-block btn-primary text-light" href="<?=BASE_URL?>/buy.php?id=<?=$product->id?>">Comprar</a>
+          <h1 class="card-title pricing-card-title text-center"> <small class="text-muted">R$</small> <?=replace_dot($product->price)?></h1>
+          <p class="container text-justify" style="min-height: 100px;"><?=$product->description?></p>
+          <button class="btn btn-lg btn-block btn-primary text-light" id="add_cart" data-id="<?=$product->id?>"><i class="fa fa-cart-plus mr-1"></i>ADD</button>
         </div>
       </div>
       <?php }?>
@@ -148,11 +186,15 @@
     <div class="row">
       <div class="col-12 col-md">
 
-        <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
+        <small class="d-block mb-3 text-muted">&copy; 2020</small>
       </div>
 
     </div>
   </footer>
 </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="<?=BASE_URL?>/js/index.js"></script>
 </body>
 </html>

@@ -10,7 +10,11 @@
         use DataBase;
 
         function __construct() {
-            $this->conn = new PDO("mysql:host={$this->db_host};dbname={$this->db_name}", $this->db_user, $this->db_pass);
+            try {
+                $this->conn = new PDO("mysql:host={$this->db_host};dbname={$this->db_name}", $this->db_user, $this->db_pass);
+            } catch (Exception $e) {
+                general_error();
+            }
         }
 
         public function is_admin($email, $password) : bool

@@ -20,5 +20,3 @@ Check now
 email: admin@admin.com
 pass: 1234
 
-
-System for apresentation

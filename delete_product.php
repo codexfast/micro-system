@@ -2,9 +2,9 @@
 
 session_start();
 
-    require 'crud.php';
-    require 'tools.php';
-    require 'config.php';
+    require_once 'crud.php';
+    require_once 'tools.php';
+    require_once 'config.php';
 
     if (!isset($_SESSION['admin_on']))
     {

@@ -157,7 +157,7 @@
                                 <div class="card card-chart bg-success p-1 py-2 m-1" style="position: relative;">
                                     <div class="card-body" >
                                       <p class="card-title text-light">Lucro de Venda</p>
-                                      <h3 class="card-text text-light">R$ <?=str_replace('.', ',', $sum->b)?></h3>
+                                      <h3 class="card-text text-light">R$ <?= replace_dot(isset($sum->b) ? $sum->b: '0.00')?></h3>
                                       <i class="fa fa-4x fa-dollar"></i>
                                     </div>
                                   </div>
@@ -168,7 +168,7 @@
                                 <div class="card card-chart bg-primary p-1 py-2 m-1" style="position: relative;">
                                     <div class="card-body" >
                                       <p class="card-title text-light">Total de Venda</p>
-                                      <h3 class="card-text text-light">R$ <?=str_replace('.', ',', $sum->p)?></h3>
+                                      <h3 class="card-text text-light">R$ <?=replace_dot(isset($sum->p) ? $sum->p: '0.00')?></h3>
                                       <i class="fa fa-4x fa-dollar"></i>
                                     </div>
                                   </div>
@@ -234,8 +234,8 @@
                                         <a href="<?=BASE_URL?>/delete_product.php?id=<?=$product->id?>" class="btn "><i class="fa fa-remove text-danger"></i></a>
                                         <?=$product->name?>
                                     </td>
-                                    <td>R$ <?=$product->price?></td>
-                                    <td>R$ <?=$product->price_owner?></td>
+                                    <td>R$ <?=replace_dot($product->price)?></td>
+                                    <td>R$ <?=replace_dot($product->price_owner)?></td>
                                 </tr>
                             <?php }?>
                             </tbody>

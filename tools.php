@@ -18,3 +18,14 @@
     {
        return (isset($_ENV[$env_ref])) ? $_ENV[$env_ref] : $default;
     }
+
+    function general_error ()
+    {
+        include('500.php');
+        exit;
+    }
+
+    function replace_dot (String $value)
+    {
+        return str_replace('.', ',', $value);
+    }
