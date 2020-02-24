@@ -11,6 +11,7 @@ Check now
 - Change base url on config.php
 - Import micro-system.sql to mysql
 - Change DB config on crud.php
+- run on terminal composer i
 
 #### Routes:
 - /admin -> login admin
