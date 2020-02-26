@@ -64,10 +64,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css">
     <link href="<?=BASE_URL?>/vendor/needim/noty/lib/noty.css" rel="stylesheet">
     
-    <script src="<?=BASE_URL?>/vendor/needim/noty/lib/noty.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" type="text/javascript"></script>
 
     <meta name="theme-color" content="#563d7c">
 
