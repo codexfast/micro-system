@@ -1,5 +1,10 @@
 {
     "require": {
         "needim/noty": "^3.1"
-    }
+    },
+    "scripts": {
+        "compile": [
+          "chmod -R 777 vendor/"
+        ]
+      }
 }
