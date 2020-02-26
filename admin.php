@@ -114,6 +114,9 @@
                                 <a class="nav-link" href="#users"
                                 ><div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
                                 Usuários</a>
+                                <a class="nav-link" href="<?=BASE_URL?>" target="_blank"
+                                ><div class="sb-nav-link-icon"><i class="fa fa-feed"></i></div>
+                                Abrir Loja</a>
 
                         </div>
                     </div>
@@ -156,7 +159,7 @@
                                 
                                 <div class="card card-chart bg-success p-1 py-2 m-1" style="position: relative;">
                                     <div class="card-body" >
-                                      <p class="card-title text-light">Lucro de Venda</p>
+                                      <p class="card-title text-light">Lucro em Venda</p>
                                       <h3 class="card-text text-light">R$ <?= replace_dot(isset($sum->b) ? $sum->b: '0.00')?></h3>
                                       <i class="fa fa-4x fa-dollar"></i>
                                     </div>
@@ -167,7 +170,7 @@
                                 
                                 <div class="card card-chart bg-primary p-1 py-2 m-1" style="position: relative;">
                                     <div class="card-body" >
-                                      <p class="card-title text-light">Total de Venda</p>
+                                      <p class="card-title text-light">Total em Venda</p>
                                       <h3 class="card-text text-light">R$ <?=replace_dot(isset($sum->p) ? $sum->p: '0.00')?></h3>
                                       <i class="fa fa-4x fa-dollar"></i>
                                     </div>

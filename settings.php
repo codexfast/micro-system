@@ -6,6 +6,10 @@
     $crud = new Crud;
 
     session_start();
+
+    if (!isset($_SESSION['client_on'])) {
+        redirect(BASE_URL);
+    }
     
     if ($_SERVER['REQUEST_METHOD'] === "POST")
     {
@@ -15,6 +19,7 @@
             $address = $_POST['address'];
             $name = $_POST['name'];
             $phone = $_POST['phone'];
+
             $client_token = $_SESSION['client_token'];
 
             $crud->update_client_by_token($client_token, [
@@ -45,10 +50,6 @@
 
             
         }
-    }
-
-    if (!isset($_SESSION['client_on'])) {
-        redirect(BASE_URL);
     }
 
     $user = $crud->get_client_by_token($_SESSION['client_token']);

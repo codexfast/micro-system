@@ -15,14 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-
-        $token = md5(uniqid(rand(), true));
-
-        if($crud->is_user($email, $password))
+        
+        if($client_token = $crud->is_user($email, $password))
         {
 
             $_SESSION['client_on']  = "true";
-            $_SESSION['client_token']  = $token;
+            $_SESSION['client_token']  = $client_token;
 
             redirect(BASE_URL);
             
@@ -31,6 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
         }
 
     }
+}
+
+if (isset($_SESSION['CLIENT_ERROR']))
+{
+    $message = $_SESSION['CLIENT_ERROR'];
+    
+    unset($_SESSION['CLIENT_ERROR']);
 }
 
 require __DIR__ . '/layout/bootstrap.login.php';

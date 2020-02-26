@@ -7,12 +7,13 @@
     
     $crud = new Crud;
     $c=[];
+    $total = 0.00;
 
     $logged = isset($_SESSION['client_on']);
 
     if (!$logged) {
 
-        redirect(BASE_URL + '/login.php');
+        redirect(BASE_URL . '/login.php');
     }
 
     if (!isset($_GET['cart']))
@@ -29,10 +30,11 @@
 
     foreach($cart as $id)
     {
-       $c[] = $crud->get_product_by_id($id);
-    }
+       $c[] = $temp = $crud->get_product_by_id($id);
 
-    print_r($c);
+       $total +=$temp->price;
+       
+    }
 
 ?>
 
@@ -42,7 +44,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>Micro Loja</title>
+    <title>Carrinho</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -53,6 +55,9 @@
     <script src="<?=BASE_URL?>/vendor/needim/noty/lib/noty.js" type="text/javascript"></script>
 
     <meta name="theme-color" content="#563d7c">
+    <script>
+      const BASE_URL = "<?=BASE_URL?>";
+    </script>
 
     <style>
       .bd-placeholder-img {
@@ -77,7 +82,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white border-bottom shadow-sm fixed-top">
   <div class="container">
-  <a class="navbar-brand" href="#">SMARTS</a>
+  <a class="navbar-brand" href="<?=BASE_URL?>">SMARTS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -121,56 +126,68 @@
 
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h2 class="display-4">Carrinho</h2>
+  <h2 class="display-4">
+    <i class="fa fa-shopping-cart text-muted"></i>
+  </h2>
   <!-- <p class="lead container">Desfrute da variedade e faça uma compra agora mesmo, sem enrolação sem burocracia!</p> -->
 </div>
 
 <div class="container">
-<div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </button>
-      </h2>
-    </div>
+<div class="accordion" id="accordionCart">
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
+  <?php
+  
+      foreach($c as $value)
+      {
+  ?>
   <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      <div class="card-header" id="heading<?=$value->id?>">
+        <h2 class="mb-0 d-flex justify-content-center">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?=$value->id?>" aria-expanded="true" aria-controls="collapse<?=$value->id?>">
+            <div>
+              <i class="fa fa-angle-down"></i>
+              <?=$value->name?>
+            </div>
+          </button>
+          <button class="btn btn-flat ml-auto fa fa-close text-danger" id="removeFromCart" data-id="<?=$value->id?>"></button>
+        </h2>
+      </div>
+
+      <div id="collapse<?=$value->id?>" class="collapse" aria-labelledby="heading<?=$value->id?>" data-parent="#accordionCart">
+        <div class="card-body">
+        <?=$value->description?>
+        </div>
+        <div class="card-footer">
+          <strong>R$</strong>
+          <?=$value->price?>
+
+        </div>
       </div>
     </div>
+  <?php
+    }
+  ?>
+
   </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h2>
+
+  <div class="card mt-5 text-center">
+    <div class="card-header">
+      <i class="fa fa-dollar"></i> <strong>Total</strong>
     </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
+    <div class="card-body">
+      <h5 class="card-title">Total de itens: <?= count($c); ?></h5>
+      <form method="post" action="<?=BASE_URL?>/buy.php">
+      <?php
+        
+        foreach($c as $value)
+        {
+      ?>
+        <input type="hidden" name="product_id[]" value="<?=$value->id?>">
+      <?php }?>
+        <button type="submit" class="btn btn-success mt-2">Pagar R$ <?=$total;?>,00</button>
+      </form>
     </div>
   </div>
-</div>
     
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">

@@ -33,17 +33,12 @@
         }
     }
 
-    if (isset($_SESSION['CLIENT_ERROR']))
-    {
-        $message = $_SESSION['CLIENT_ERROR'];
-        
-        unset($_SESSION['CLIENT_ERROR']);
-    }
 
-    if (!isset($_SESSION['client_on'])) {
 
-        redirect(BASE_URL + 'login.php');
-    }
+    // if (!isset($_SESSION['client_on'])) {
+
+    //     redirect(BASE_URL . '/login.php');
+    // }
 
     $logged = isset($_SESSION['client_on']);
     
@@ -76,6 +71,10 @@
 
     <meta name="theme-color" content="#563d7c">
 
+    <script>
+      const BASE_URL = "<?=BASE_URL?>";
+    </script>
+
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -99,7 +98,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white border-bottom shadow-sm fixed-top">
   <div class="container">
-  <a class="navbar-brand" href="#">SMARTS</a>
+  <a class="navbar-brand" href="<?=BASE_URL?>">SMARTS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -146,7 +145,7 @@
   {
   
 ?>
-<div class="container">
+<div class="container mt-5">
   <div class="alert alert-success" role="alert">
   <h4 class="alert-heading">Compra fake efetuada</h4>
   <p>Finja que foi efetuada uma compra e irá chegar em sua moradia</p>
